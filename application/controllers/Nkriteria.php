@@ -1,5 +1,5 @@
 <?php
-class Alternatif extends CI_Controller{
+class Nkriteria extends CI_Controller{
     
     public function __construct() {
         parent::__construct();
@@ -13,59 +13,86 @@ class Alternatif extends CI_Controller{
             $data['email'] = $session_data['email'];
             $data['akses'] = $session_data['akses'];
             $data['nama'] = $session_data['nama'];
+            $data['np'] = $this->Mglobals->getAll("nilai_preferensi");
+
+            $cek2 = $this->Mglobals->getAllQR("select count(*) as jml from kriteria ;")->jml;
+
+            if ($cek2 == 5) {
+
+            $datak = $this->Mglobals->getAll("kriteria");
+            $i = 1;
+            foreach ($datak->result() as $row) {
+                $data['k'.$i] = $row->nama;
+                $i++;
+            }
             
             $this->load->view('head', $data);
-            $this->load->view('alternatif/index');
+            $this->load->view('nkriteria/index');
             $this->load->view('footer');
+        }else {
+            $message = "Data Kriteria harus minimal 5";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+            $this->modul->halaman('kriteria');
+        }
         }else{
            $this->modul->halaman('login');
         }
     }
-    
-    public function ajax_list() {
+
+    public function detail() {
         if($this->session->userdata('logged_in')){
-            $data = array();
-            $list = $this->Mglobals->getAll("alternatif");
-            foreach ($list->result() as $row) {
-                $val = array();
-                $val[] = $row->nama;
-                $val[] = '<div style="text-align: center;">'
-                        . '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="ganti('."'".$row->id."'".')"><i class="ft-edit"></i> Edit</a>&nbsp;'
-                        . '<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="hapus('."'".$row->id."'".','."'".$row->nama."'".')"><i class="ft-delete"></i> Delete</a>'
-                        . '</div>';
-                
-                $data[] = $val;
+            $session_data = $this->session->userdata('logged_in');
+            $data['email'] = $session_data['email'];
+            $data['akses'] = $session_data['akses'];
+            $data['nama'] = $session_data['nama'];
+            $data['np'] = $this->Mglobals->getAll("nilai_preferensi");
+
+            $cek2 = $this->Mglobals->getAllQR("select count(*) as jml from kriteria ;")->jml;
+            if ($cek2 == 5) {
+            $datak = $this->Mglobals->getAll("kriteria");
+            $i = 1;
+            foreach ($datak->result() as $row) {
+                $data['k'.$i] = $row->nama;
+                $i++;
             }
-            $output = array("data" => $data);
-            echo json_encode($output);
+
+            $np = $this->Mglobals->getAll("nilai_kriteria");
+            $z = 1;
+            foreach ($np->result() as $row) {
+                $data['n'.$z] = $row->nilai;
+                $z++;
+            }
+            
+            $this->load->view('head', $data);
+            $this->load->view('nkriteria/detail');
+            $this->load->view('footer');
+        }else {
+            $message = "Data Kriteria harus minimal 5";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+            $this->modul->halaman('kriteria');
+        }
         }else{
-            $this->modul->halaman('login');
+           $this->modul->halaman('login');
         }
     }
 
+
     public function ajax_add() {
         if($this->session->userdata('logged_in')){
-            $cek2 = $this->Mglobals->getAllQR("select count(*) as jml from alternatif ;")->jml;
-            $cek = $this->Mglobals->getAllQR("select count(*) as jml from alternatif where nama = '".$this->input->post('nama')."';")->jml;
-            
-            if ($cek2 > 4) {
-                $status = "Data kriteria yang dapat dimasukkan maksimal 5";
-            }else{
-                if($cek > 0){
-                    $status = "Data sudah ada";
-                }else{
-                    $data = array(
-                        'nama' => $this->input->post('nama')
-                    );
-                    $simpan = $this->Mglobals->add("alternatif",$data);
-                    if($simpan == 1){
-                        $status = "Data tersimpan";
-                    }else{
-                        $status = "Data gagal tersimpan";
-                    }
-                }
-            }
+                $banyak = $this->Mglobals->getAllQR("select count(*) as jml from nilai_kriteria ;")->jml;
 
+                for ($i=1; $i <= $banyak ; $i++) { 
+                    $data = array(
+                        'nilai' => $this->input->post('pa'.$i)
+                    );
+                    $condition['id'] = $i;
+                    $update = $this->Mglobals->update("nilai_kriteria",$data, $condition);
+                }
+                if($update == 1){
+                    $status = "Data tersimpan";
+                }else{
+                    $status = "Data gagal tersimpan";
+                }
             echo json_encode(array("status" => $status));
         }else{
             $this->modul->halaman('login');

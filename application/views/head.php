@@ -77,7 +77,7 @@
                 <div class="navbar-container content" style="margin-left:0px;">
                     <div class="collapse navbar-collapse" id="navbar-mobile">
                         <ul class="nav navbar-nav mr-auto float-left">
-                            <li class="dropdown nav-item mega-dropdown mr-2"><a class=" nav-link" href="#" data-toggle="dropdown">SPK Smartphone Xiaomi</a>
+                            <li class="dropdown nav-item mega-dropdown mr-2"><a class=" nav-link" href="<?php echo base_url(); ?>home">SPK Smartphone Xiaomi</a>
                                 
                             </li>
                             <li class="dropdown nav-item mega-dropdown ml-2 mr-2" ><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown">Master</a>
@@ -89,13 +89,13 @@
                                         </a>
                                     </li>
                                     <li class="col-md-2 pb-2 pt-2">
-                                        <a href="<?php echo base_url(); ?>alternatif">
-                                        <h6 class="dropdown-menu-header text-uppercase mb-1"> Data Alternatif</h6>
+                                        <a href="<?php echo base_url(); ?>kriteria">
+                                        <h6 class="dropdown-menu-header text-uppercase mb-1"> Data Kriteria</h6>
                                         </a>
                                     </li>
                                     <li class="col-md-2 pb-2 pt-2">
-                                        <a href="<?php echo base_url(); ?>kriteria">
-                                        <h6 class="dropdown-menu-header text-uppercase mb-1"> Data Kriteria</h6>
+                                        <a href="<?php echo base_url(); ?>alternatif">
+                                        <h6 class="dropdown-menu-header text-uppercase mb-1"> Data Alternatif</h6>
                                         </a>
                                     </li>
                 
@@ -106,13 +106,13 @@
                                 <ul class="mega-dropdown-menu dropdown-menu row">
                                    
                                     <li class="col-md-2 pb-2 pt-2">
-                                        <a href="<?php echo base_url(); ?>">
-                                        <h6 class="dropdown-menu-header text-uppercase mb-1"> Nilai Alternatif</h6>
+                                        <a href="<?php echo base_url(); ?>nkriteria">
+                                        <h6 class="dropdown-menu-header text-uppercase mb-1"> Nilai Kriteria</h6>
                                         </a>
                                     </li>
                                     <li class="col-md-2 pb-2 pt-2">
-                                        <a href="<?php echo base_url(); ?>">
-                                        <h6 class="dropdown-menu-header text-uppercase mb-1"> Nilai Kriteria</h6>
+                                        <a href="<?php echo base_url(); ?>nalternatif">
+                                        <h6 class="dropdown-menu-header text-uppercase mb-1"> Nilai Alternatif</h6>
                                         </a>
                                     </li>
                                     <li class="col-md-2 pb-2 pt-2">

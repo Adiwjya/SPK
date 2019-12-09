@@ -5,7 +5,7 @@
     
     $(document).ready(function() {
         table = $('#tb').DataTable( {
-            ajax: "<?php echo base_url(); ?>alternatif/ajax_list"
+            ajax: "<?php echo base_url(); ?>kriteria/ajax_list"
         });
         
         $('.datepicker').datepicker({
@@ -23,10 +23,9 @@
     
     function add(){
         save_method = 'add';
-        save();
-        // $('#form')[0].reset(); // reset form on modals
-        // $('#modal_form').modal('show'); // show bootstrap modal
-        // $('.modal-title').text('Tambah alternatif'); // Set Title to Bootstrap modal title
+        $('#form')[0].reset(); // reset form on modals
+        $('#modal_form').modal('show'); // show bootstrap modal
+        $('.modal-title').text('Tambah kriteria'); // Set Title to Bootstrap modal title
     }
     
     function save(){
@@ -35,9 +34,9 @@
         
         var url;
         if(save_method === 'add') {
-            url = "<?php echo base_url(); ?>alternatif/ajax_add";
+            url = "<?php echo base_url(); ?>kriteria/ajax_add";
         } else {
-            url = "<?php echo base_url(); ?>alternatif/ajax_edit";
+            url = "<?php echo base_url(); ?>kriteria/ajax_edit";
         }
         
         // ajax adding data to database
@@ -68,7 +67,7 @@
         if(confirm("Apakah anda yakin menghapus " + nama + " ?")){
             // ajax delete data to database
             $.ajax({
-                url : "<?php echo base_url(); ?>alternatif/hapus/" + id,
+                url : "<?php echo base_url(); ?>kriteria/hapus/" + id,
                 type: "POST",
                 dataType: "JSON",
                 success: function(data){
@@ -85,11 +84,11 @@
         save_method = 'update';
         $('#form')[0].reset(); // reset form on modals
         $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-        $('.modal-title').text('Ganti Alternatif'); // Set title to Bootstrap modal title
+        $('.modal-title').text('Ganti kriteria'); // Set title to Bootstrap modal title
         
         //Ajax Load data from ajax
         $.ajax({
-            url : "<?php echo base_url(); ?>alternatif/ganti/" + id,
+            url : "<?php echo base_url(); ?>kriteria/ganti/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data){
@@ -100,28 +99,6 @@
                 alert('Error get data');
             }
         });
-    }
-
-    function showbarang(){
-        $('#modal_barang').modal('show'); // show bootstrap modal
-        tbbarang = $('#tbbarang').DataTable( {
-            ajax: "<?php echo base_url(); ?>alternatif/ajax_barang",
-            retrieve:true
-        });
-        tbbarang.destroy();
-        tbbarang = $('#tbbarang').DataTable( {
-            ajax: "<?php echo base_url(); ?>alternatif/ajax_barang",
-            retrieve:true
-        });
-    }
-
-    function pilih(kode, nama){
-        $('[name="id"]').val(kode);
-        $('[name="nama"]').val(nama);
-
-        add();
-        
-        $('#modal_barang').modal('hide');
     }
     
 </script>
@@ -141,12 +118,12 @@
                 <div class="col-xl-12 col-lg-12 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Master Alternatif</h4>
+                            <h4 class="card-title">Master Kriteria</h4>
                         </div>
                         <div class="card-content">
                             <div class="card-body">
                                 <div class="col-md-12 col-xs-12 col-sm-12">
-                                    <button class="btn btn-md btn-primary" onclick="showbarang();"> Tambah Alternatif</button>
+                                    <button class="btn btn-md btn-primary" onclick="add();"> Tambah Kriteria</button>
                                     <button class="btn btn-md btn-default" onclick="reload();"> Reload</button>
                                 </div>
                                 <div class="clearfix"></div><br>
@@ -154,7 +131,7 @@
                                     <table id="tb" class="table table-hover mb-0 ps-container ps-theme-default">
                                         <thead>
                                             <tr> 
-                                                <th>Nama Alternatif</th>
+                                                <th>Nama Kriteria</th>
                                                 <th style="text-align: center;">Aksi</th>
                                             </tr>
                                         </thead>
@@ -188,9 +165,9 @@
                 <form action="#" id="form" class="form-horizontal">
                     <input type="hidden" name="id">
                     <div class="form-group row">
-                        <label class="col-sm-4 col-form-label" style="text-align: right;">Nama Alternatif</label>
+                        <label class="col-sm-4 col-form-label" style="text-align: right;">Nama Kriteria</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="nama" placeholder="Nama Alternatif">
+                            <input type="text" class="form-control" name="nama" placeholder="Nama Kriteria">
                         </div>
                     </div>
                 </form>
@@ -198,37 +175,6 @@
             <div class="modal-footer">
                 <button id="btnSave" type="button" class="btn btn-primary" onclick="save();">Save</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- modal -->
-
-<!-- Modal list barang -->
-<div class="modal fade" id="modal_barang" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5>Data Barang</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-horizontal">
-                    <div class="table-responsive">
-                        <table id="tbbarang" class="table table-hover mb-0 ps-container ps-theme-default" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th style="text-align: center;">Aksi</th>
-                                    <th>Id</th>
-                                    <th>Nama</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

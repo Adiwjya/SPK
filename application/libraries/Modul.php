@@ -80,7 +80,6 @@ class Modul {
         return $hasil;
     }
     
-    
     public function autokodemax($kolom, $table) {
         $q_data = mysqli_query($this->getkoneksi(),"SELECT ifnull(max(".$kolom."),0) + 1 as hasil FROM ".$table.";");
         $data_query = mysqli_fetch_array($q_data);
