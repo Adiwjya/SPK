@@ -15,7 +15,9 @@
             orientation: "top auto",
             todayBtn: true 
         });
+
         add();
+
     });
     
     function add(){
@@ -29,9 +31,9 @@
         
         var url;
         if(save_method === 'add') {
-            url = "<?php echo base_url(); ?>nkriteria/ajax_add_bobot";
+            url = "<?php echo base_url(); ?>nalternatif/ajax_add_bobot";
         } else {
-            url = "<?php echo base_url(); ?>nkriteria/ajax_edit";
+            url = "<?php echo base_url(); ?>nalternatif/ajax_edit";
         }
         
         // ajax adding data to database
@@ -43,6 +45,7 @@
             success: function(data)
             {
                 $('#modal_form').modal('hide');
+                lanjut()
                 $('#btnSave').text('Mengalihkan Halaman'); //change button text
                 $('#btnSave').attr('disabled',false); //set button enable 
             },
@@ -76,12 +79,13 @@
                 <div class="col-xl-12 col-lg-12 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Perbandingan Kriteria</h4>
+                            <h4 class="card-title">Perbandingan Alternatif Berdasarkan <?php echo $kriteria; ?></h4>
                         </div>
                         <hr>
                         <div class="card-content">
                             <div class="card-body">
                                 <form action="#" id="form" name="form">
+                                    <input type="hidden" name="kri" id="kri" value="<?php echo $idny; ?>">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>

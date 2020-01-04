@@ -24,9 +24,6 @@
     function add(){
         save_method = 'add';
         save();
-        // $('#form')[0].reset(); // reset form on modals
-        // $('#modal_form').modal('show'); // show bootstrap modal
-        // $('.modal-title').text('Tambah alternatif'); // Set Title to Bootstrap modal title
     }
     
     function save(){
@@ -35,9 +32,9 @@
         
         var url;
         if(save_method === 'add') {
-            url = "<?php echo base_url(); ?>alternatif/ajax_add";
+            url = "<?php echo base_url(); ?>nalternatif/ajax_add";
         } else {
-            url = "<?php echo base_url(); ?>alternatif/ajax_edit";
+            url = "<?php echo base_url(); ?>nalternatif/ajax_edit";
         }
         
         // ajax adding data to database
@@ -50,9 +47,8 @@
             {
                 alert(data.status);
                 $('#modal_form').modal('hide');
-                reload();
-                    
-                $('#btnSave').text('Save'); //change button text
+                // lanjut();
+                $('#btnSave').text('Simpan'); //change button text
                 $('#btnSave').attr('disabled',false); //set button enable 
             },
             error: function (jqXHR, textStatus, errorThrown){
@@ -63,65 +59,10 @@
             }
         });
     }
-    
-    function hapus(id, nama){
-        if(confirm("Apakah anda yakin menghapus " + nama + " ?")){
-            // ajax delete data to database
-            $.ajax({
-                url : "<?php echo base_url(); ?>alternatif/hapus/" + id,
-                type: "POST",
-                dataType: "JSON",
-                success: function(data){
-                    alert(data.status);
-                    reload();
-                },error: function (jqXHR, textStatus, errorThrown){
-                    alert('Error hapus data');
-                }
-            });
-        }
-    }
-    
-    function ganti(id){
-        save_method = 'update';
-        $('#form')[0].reset(); // reset form on modals
-        $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-        $('.modal-title').text('Ganti Alternatif'); // Set title to Bootstrap modal title
-        
-        //Ajax Load data from ajax
-        $.ajax({
-            url : "<?php echo base_url(); ?>alternatif/ganti/" + id,
-            type: "GET",
-            dataType: "JSON",
-            success: function(data){
-                $('[name="id"]').val(data.id );
-                $('[name="nama"]').val(data.nama);
-            },
-            error: function (jqXHR, textStatus, errorThrown){
-                alert('Error get data');
-            }
-        });
-    }
 
-    function showbarang(){
-        $('#modal_barang').modal('show'); // show bootstrap modal
-        tbbarang = $('#tbbarang').DataTable( {
-            ajax: "<?php echo base_url(); ?>alternatif/ajax_barang",
-            retrieve:true
-        });
-        tbbarang.destroy();
-        tbbarang = $('#tbbarang').DataTable( {
-            ajax: "<?php echo base_url(); ?>alternatif/ajax_barang",
-            retrieve:true
-        });
-    }
-
-    function pilih(kode, nama){
-        $('[name="id"]').val(kode);
-        $('[name="nama"]').val(nama);
-
-        add();
-        
-        $('#modal_barang').modal('hide');
+    function lanjut(){
+        var tujuan = document.getElementById('kr').value;
+        window.location.href = "<?php echo base_url(); ?>nalternatif/detail/"+tujuan;
     }
     
 </script>
@@ -138,6 +79,7 @@
     <div class="content" style="margin: 50px;">
       <div class="container-fluid">
       <div class="">
+      <form action="#" id="form" name="form">
                 <div class="col-xl-12 col-lg-12 col-12">
                     <div class="card">
                         <div class="card-header">
@@ -297,12 +239,14 @@
                                 <label class="col-sm-4 col-form-label" style="text-align: left;" ><?php echo $a5; ?></label>
                                 </div>
                                 <div class="card-footer">
-                                    <button id="btnSave" type="button" class="btn btn-primary" onclick="save();">Lanjutkan Perhitungan  &nbsp;<span class="fa fa-arrow-right"></span></button>
+                                    <button id="btnSave" type="button" class="btn btn-primary" onclick="add();">Simpan </button>
+                                    <button id="btnSave" type="button" class="btn btn-primary float-right" onclick="lanjut();">Detail Normalisasi yang sudah ada &nbsp;<span class="fa fa-arrow-right"></span> </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </form>
             </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->

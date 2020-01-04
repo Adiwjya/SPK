@@ -116,8 +116,8 @@
                                         </a>
                                     </li>
                                     <li class="col-md-2 pb-2 pt-2">
-                                        <a href="<?php echo base_url(); ?>">
-                                        <h6 class="dropdown-menu-header text-uppercase mb-1"> Hasil Alternatif</h6>
+                                        <a href="<?php echo base_url(); ?>ranking">
+                                        <h6 class="dropdown-menu-header text-uppercase mb-1"> Perankingan</h6>
                                         </a>
                                     </li>
                 

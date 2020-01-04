@@ -41,9 +41,10 @@
             dataType: "JSON",
             success: function(data)
             {
+                alert(data.status);
                 $('#modal_form').modal('hide');
-                lanjut();
-                $('#btnSave').text('Save'); //change button text
+                lanjut()
+                $('#btnSave').text('Simpan'); //change button text
                 $('#btnSave').attr('disabled',false); //set button enable 
             },
             error: function (jqXHR, textStatus, errorThrown){
@@ -88,7 +89,7 @@
                                 <?php
                                 foreach ($np->result() as $row) {
                                     ?>
-                                <option value="<?php echo $row->id; ?>"><?php echo $row->nama; ?></option>
+                                <option value="<?php echo $row->nilai; ?>"><?php echo $row->nama; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -101,7 +102,7 @@
                                 <?php
                                 foreach ($np->result() as $row) {
                                     ?>
-                                <option value="<?php echo $row->id; ?>"><?php echo $row->nama; ?></option>
+                                <option value="<?php echo $row->nilai; ?>"><?php echo $row->nama; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -114,7 +115,7 @@
                                 <?php
                                 foreach ($np->result() as $row) {
                                     ?>
-                                <option value="<?php echo $row->id; ?>"><?php echo $row->nama; ?></option>
+                                <option value="<?php echo $row->nilai; ?>"><?php echo $row->nama; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -127,7 +128,7 @@
                                 <?php
                                 foreach ($np->result() as $row) {
                                     ?>
-                                <option value="<?php echo $row->id; ?>"><?php echo $row->nama; ?></option>
+                                <option value="<?php echo $row->nilai; ?>"><?php echo $row->nama; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -140,7 +141,7 @@
                                 <?php
                                 foreach ($np->result() as $row) {
                                     ?>
-                                <option value="<?php echo $row->id; ?>"><?php echo $row->nama; ?></option>
+                                <option value="<?php echo $row->nilai; ?>"><?php echo $row->nama; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -153,7 +154,7 @@
                                 <?php
                                 foreach ($np->result() as $row) {
                                     ?>
-                                <option value="<?php echo $row->id; ?>"><?php echo $row->nama; ?></option>
+                                <option value="<?php echo $row->nilai; ?>"><?php echo $row->nama; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -166,7 +167,7 @@
                                 <?php
                                 foreach ($np->result() as $row) {
                                     ?>
-                                <option value="<?php echo $row->id; ?>"><?php echo $row->nama; ?></option>
+                                <option value="<?php echo $row->nilai; ?>"><?php echo $row->nama; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -179,7 +180,7 @@
                                 <?php
                                 foreach ($np->result() as $row) {
                                     ?>
-                                <option value="<?php echo $row->id; ?>"><?php echo $row->nama; ?></option>
+                                <option value="<?php echo $row->nilai; ?>"><?php echo $row->nama; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -192,7 +193,7 @@
                                 <?php
                                 foreach ($np->result() as $row) {
                                     ?>
-                                <option value="<?php echo $row->id; ?>"><?php echo $row->nama; ?></option>
+                                <option value="<?php echo $row->nilai; ?>"><?php echo $row->nama; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -205,7 +206,7 @@
                                 <?php
                                 foreach ($np->result() as $row) {
                                     ?>
-                                <option value="<?php echo $row->id; ?>"><?php echo $row->nama; ?></option>
+                                <option value="<?php echo $row->nilai; ?>"><?php echo $row->nama; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -215,7 +216,8 @@
                                
                                 </form>
                                  <div class="card-footer">
-                                    <button id="btnSave" type="button" class="btn btn-primary" onclick="add();">Lanjutkan Perhitungan  &nbsp;<span class="fa fa-arrow-right"></span></button>
+                                    <button id="btnSave" type="button" class="btn btn-primary" onclick="add();">Simpan </button>
+                                    <button id="btnSave" type="button" class="btn btn-primary float-right" onclick="lanjut();">Detail Normalisasi yang sudah ada &nbsp;<span class="fa fa-arrow-right"></span></button>
                                 </div>
                             </div>
                         </div>

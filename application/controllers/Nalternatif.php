@@ -13,7 +13,7 @@ class Nalternatif extends CI_Controller{
             $data['email'] = $session_data['email'];
             $data['akses'] = $session_data['akses'];
             $data['nama'] = $session_data['nama'];
-            $data['np'] = $this->Mglobals->getAll("nilai_preferensi");
+            $data['np'] = $this->Mglobals->getAllQ("select * from nilai_preferensi order by nilai desc ;");
             $data['kriteria'] = $this->Mglobals->getAll("kriteria");
 
             $cek2 = $this->Mglobals->getAllQR("select count(*) as jml from alternatif ;")->jml;
@@ -39,6 +39,77 @@ class Nalternatif extends CI_Controller{
             $this->modul->halaman('login');
         }    
     }
+
+    public function detail() {
+        if($this->session->userdata('logged_in')){
+            $session_data = $this->session->userdata('logged_in');
+            $data['email'] = $session_data['email'];
+            $data['akses'] = $session_data['akses'];
+            $data['nama'] = $session_data['nama'];
+            $data['np'] = $this->Mglobals->getAll("nilai_preferensi");
+
+            $cek2 = $this->Mglobals->getAllQR("select count(*) as jml from alternatif ;")->jml;
+            if ($cek2 == 5) {
+            $datak = $this->Mglobals->getAll("alternatif");
+            $i = 1;
+            foreach ($datak->result() as $row) {
+                $data['k'.$i] = $row->nama;
+                $i++;
+            }
+
+            $namanya = $this->Mglobals->getAll("kriteria");
+            $i = 1;
+            foreach ($namanya->result() as $row) {
+                $data['ki'.$i] = $row->id;
+                $data['kr'.$i] = $row->nama;
+                $i++;
+            }
+            
+            $cek = $this->uri->segment(3);
+            $db = "";
+            $data['kriteria'] = "";
+            if ($cek == "1") {
+                $db = "nilai_alternatif_k1";
+                $data['kriteria'] = $data['kr1'];
+                $data['idny'] = $data['ki1'];
+            }else if ($cek == "2") {
+                $db = "nilai_alternatif_k2";
+                $data['kriteria'] = $data['kr2'];
+                $data['idny'] = $data['ki2'];
+            }else if ($cek == "3") {
+                $db = "nilai_alternatif_k3";
+                $data['kriteria'] = $data['kr3'];
+                $data['idny'] = $data['ki3'];
+            }else if ($cek == "4") {
+                $db = "nilai_alternatif_k4";
+                $data['kriteria'] = $data['kr4'];
+                $data['idny'] = $data['ki4'];
+            }else {
+                $db = "nilai_alternatif_k5";
+                $data['kriteria'] = $data['kr5'];
+                $data['idny'] = $data['ki5'];
+            }
+
+            $np = $this->Mglobals->getAll($db);
+            $z = 1;
+            foreach ($np->result() as $row) {
+                $data['n'.$z] = $row->nilai;
+                $z++;
+            }
+            
+            $this->load->view('head', $data);
+            $this->load->view('nalternatif/detail');
+            $this->load->view('footer');
+        }else {
+            $message = "Data Kriteria harus minimal 5";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+            $this->modul->halaman('kriteria');
+        }
+        }else{
+           $this->modul->halaman('login');
+        }
+    }
+
     
 
 
@@ -66,64 +137,33 @@ class Nalternatif extends CI_Controller{
 
     public function ajax_add() {
         if($this->session->userdata('logged_in')){
-            
-            $cek = $this->Mglobals->getAllQR("select count(*) as jml from alternatif where nama = '".$this->input->post('nama')."';")->jml;
-            
-            if($cek > 0){
-                $status = "Data sudah ada";
-            }else{
+            $cek =  $this->input->post('kr');
+            $db = "";
+            if ($cek == "1") {
+                $db = "nilai_alternatif_k1";
+            }else if ($cek == "2") {
+                $db = "nilai_alternatif_k2";
+            }else if ($cek == "3") {
+                $db = "nilai_alternatif_k3";
+            }else if ($cek == "4") {
+                $db = "nilai_alternatif_k4";
+            }else {
+                $db = "nilai_alternatif_k5";
+            }
+
+            $banyak = $this->Mglobals->getAllQR("select count(*) as jml from ".$db." ;")->jml;
+
+            for ($i=1; $i <= $banyak ; $i++) { 
                 $data = array(
-                    'nama' => $this->input->post('nama')
+                    'nilai' => $this->input->post('pa'.$i)
                 );
-                $simpan = $this->Mglobals->add("alternatif",$data);
-                if($simpan == 1){
-                    $status = "Data tersimpan";
-                }else{
-                    $status = "Data gagal tersimpan";
-                }
+                $condition['id'] = $i;
+                $update = $this->Mglobals->update($db,$data, $condition);
             }
-            echo json_encode(array("status" => $status));
-        }else{
-            $this->modul->halaman('login');
-        }
-    }
-    
-    public function ganti(){
-        if($this->session->userdata('logged_in')){
-            $kondisi['id'] = $this->uri->segment(3);
-            $data = $this->Mglobals->get_by_id("alternatif", $kondisi);
-            echo json_encode($data);
-        }else{
-            $this->modul->halaman('login');
-        }
-    }
-    
-    public function ajax_edit() {
-        if($this->session->userdata('logged_in')){
-            $data = array(
-                    'nama' => $this->input->post('nama')
-            );
-            $condition['id'] = $this->input->post('id');
-            $update = $this->Mglobals->update("alternatif",$data, $condition);
             if($update == 1){
-                $status = "Data terupdate";
+                $status = "Data tersimpan";
             }else{
-                $status = "Data gagal terupdate";
-            }
-            echo json_encode(array("status" => $status));
-        }else{
-            $this->modul->halaman('login');
-        }
-    }
-    
-    public function hapus() {
-        if($this->session->userdata('logged_in')){
-            $kondisi['id'] = $this->uri->segment(3);
-            $hapus = $this->Mglobals->delete("alternatif",$kondisi);
-            if($hapus == 1){
-                $status = "Data terhapus";
-            }else{
-                $status = "Data gagal terhapus";
+                $status = "Data gagal tersimpan";
             }
             echo json_encode(array("status" => $status));
         }else{
@@ -131,24 +171,42 @@ class Nalternatif extends CI_Controller{
         }
     }
 
-    public function ajax_barang() {
+    public function ajax_add_bobot() {
         if($this->session->userdata('logged_in')){
-            $data = array();
-            $list = $this->Mglobals->getAllQ("select * from barang;");
-            foreach ($list->result() as $row) {
-                $val = array();
-                $val[] = '<div style="text-align: center;">'
-                        . '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Pilih" onclick="pilih('."'".$row->id."'".','."'".$row->nama."'".')"><i class="ft-check"></i> Pilih</a>'
-                        . '</div>';
-                $val[] = $row->id;
-                $val[] = $row->nama;
-                
-                $data[] = $val;
+
+            $cek =  $this->input->post('kri');
+            $db = "";
+            if ($cek == "1") {
+                $db = "nilai_k1_bobot";
+            }else if ($cek == "2") {
+                $db = "nilai_k2_bobot";
+            }else if ($cek == "3") {
+                $db = "nilai_k3_bobot";
+            }else if ($cek == "4") {
+                $db = "nilai_k4_bobot";
+            }else {
+                $db = "nilai_k5_bobot";
             }
-            $output = array("data" => $data);
-            echo json_encode($output);
+
+            $banyak = $this->Mglobals->getAllQR("select count(*) as jml from ".$db." ;")->jml;
+
+                for ($i=1; $i <= $banyak ; $i++) { 
+                    $data = array(
+                        'bobot' => $this->input->post('nb'.$i)
+                    );
+                    $condition['id'] = $i;
+                    $update = $this->Mglobals->update($db,$data, $condition);
+                }
+                if($update == 1){
+                    $status = "Data tersimpan";
+                }else{
+                    $status = "Data gagal tersimpan";
+                }
+            echo json_encode(array("status" => $status));
         }else{
             $this->modul->halaman('login');
         }
     }
+
+
 }
