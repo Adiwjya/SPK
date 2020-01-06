@@ -91,6 +91,41 @@ class Ranking extends CI_Controller{
         }
     }
 
+    public function print() {     
+            if($this->session->userdata('logged_in')){
+            $session_data = $this->session->userdata('logged_in');
+            $data['email'] = $session_data['email'];
+            $data['akses'] = $session_data['akses'];
+            $data['nama'] = $session_data['nama'];
+            $data['np'] = $this->Mglobals->getAll("nilai_preferensi");
+
+            $cek2 = $this->Mglobals->getAllQR("select count(*) as jml from ranking ;")->jml;
+
+            if ($cek2 == 5) {
+
+            $dataa = $this->Mglobals->getAllQ("select * from ranking order by nilai desc limit 3 ;");
+            $i = 1;
+            foreach ($dataa->result() as $row) {
+                $data['a'.$i] = $row->nama;
+                $data['n'.$i] = $row->nilai;
+                $i++;
+            }
+
+            
+            $this->load->view('head', $data);
+            $this->load->view('ranking/print');
+            $this->load->view('footer');
+        }else {
+            $message = "Data Kriteria harus minimal 5";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+            $this->modul->halaman('kriteria');
+        }
+        }else{
+           $this->modul->halaman('login');
+        }
+    }
+    
+
     public function detail() {
         if($this->session->userdata('logged_in')){
             $session_data = $this->session->userdata('logged_in');

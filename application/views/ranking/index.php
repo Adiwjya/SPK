@@ -17,6 +17,25 @@
         });
         add();
     });
+
+ 
+var e = jQuery.Event( "keydown", { keyCode: 80 } ); //80 itu kode  huruf "P" keydown itu ctrl
+$('#form')[0].contentWindow.print();
+jQuery( "form" ).trigger( e );
+
+
+
+ function init(){
+  var printContents = document.getElementById("form").innerHTML;
+  var originalContents = document.body.innerHTML;
+  document.body.innerHTML = printContents;
+
+  window.print();
+  document.body.innerHTML = originalContents;
+ };
+
+
+
     
     function add(){
         save_method = 'add';
@@ -52,9 +71,7 @@
         });
     }
 
-    function lanjut(){
-        window.location.href = "<?php echo base_url(); ?>nalternatif";
-    }
+   
     
 </script>
 <!-- Content Wrapper. Contains page content -->
@@ -78,7 +95,7 @@
                         <hr>
                         <div class="card-content">
                             <div class="card-body">
-                                <form action="#" id="form" name="form">
+                                <form  id="form" name="form">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -195,7 +212,7 @@
                                 </form>
                                 <div class="card-footer">
                                 <button id="btnSave" type="button" class="btn btn-primary "></button>
-                                    <button id="btnSave" type="button" class="btn btn-primary float-right" onclick="lanjut();">Lihat Ranking &nbsp;<span class="fa fa-star"></span></button>
+                                    <button id="btnPrint" type="button" class="btn btn-primary float-right" onClick="init()">Print/Cetak &nbsp;<span class="fa fa-print"></span></button>
                                 </div>
                             </div>
                         </div>
