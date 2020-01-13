@@ -71,6 +71,31 @@ jQuery( "form" ).trigger( e );
         });
     }
 
+    function save2(){
+        
+        var url = "<?php echo base_url(); ?>ranking/ajax_add_history";
+        
+        // ajax adding data to database
+        $.ajax({
+            url : url,
+            type: "POST",
+            data: $('#form').serialize(),
+            dataType: "JSON",
+            success: function(data)
+            {
+                alert(data.status);
+                $('#modal_form').modal('hide');
+
+            },
+            error: function (jqXHR, textStatus, errorThrown){
+                alert("Error json " + errorThrown);
+                
+                $('#btnSave').text('Save'); //change button text
+                $('#btnSave').attr('disabled',false); //set button enable 
+            }
+        });
+    }
+
    
     
 </script>
@@ -106,6 +131,7 @@ jQuery( "form" ).trigger( e );
                                         <th scope="col"><?php echo $k4; ?></th>
                                         <th scope="col"><?php echo $k5 ; ?></th>
                                         <th scope="col">Eigen Kriteria</th>
+                                        
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -117,6 +143,12 @@ jQuery( "form" ).trigger( e );
                                             <td><?php echo $bk41; ?></td>
                                             <td><?php echo $bk51; ?></td>
                                             <td><?php echo $bk1; ?></td>
+                                        <input type="hidden" name="b11" value="<?php echo $bk11; ?>">
+                                        <input type="hidden" name="b12" value="<?php echo $bk21; ?>">
+                                        <input type="hidden" name="b13" value="<?php echo $bk31; ?>">
+                                        <input type="hidden" name="b14" value="<?php echo $bk41; ?>">
+                                        <input type="hidden" name="b15" value="<?php echo $bk51; ?>">
+                                        <input type="hidden" name="b16" value="<?php echo $bk1; ?>">
                                         </tr>
                                         <tr>
                                         <th scope="row"><?php echo $a2; ?></th>
@@ -126,6 +158,12 @@ jQuery( "form" ).trigger( e );
                                             <td><?php echo $bk42; ?></td>
                                             <td><?php echo $bk52; ?></td>
                                             <td><?php echo $bk2; ?></td>
+                                        <input type="hidden" name="b21" value="<?php echo $bk12; ?>">
+                                        <input type="hidden" name="b22" value="<?php echo $bk22; ?>">
+                                        <input type="hidden" name="b23" value="<?php echo $bk32; ?>">
+                                        <input type="hidden" name="b24" value="<?php echo $bk42; ?>">
+                                        <input type="hidden" name="b25" value="<?php echo $bk52; ?>">
+                                        <input type="hidden" name="b26" value="<?php echo $bk2; ?>">
                                         </tr>
                                         <tr>
                                         <th scope="row"><?php echo $a3; ?></th>
@@ -135,6 +173,12 @@ jQuery( "form" ).trigger( e );
                                             <td><?php echo $bk43; ?></td>
                                             <td><?php echo $bk53; ?></td>
                                             <td><?php echo $bk3; ?></td>
+                                        <input type="hidden" name="b31" value="<?php echo $bk13; ?>">
+                                        <input type="hidden" name="b32" value="<?php echo $bk23; ?>">
+                                        <input type="hidden" name="b33" value="<?php echo $bk33; ?>">
+                                        <input type="hidden" name="b34" value="<?php echo $bk43; ?>">
+                                        <input type="hidden" name="b35" value="<?php echo $bk53; ?>">
+                                        <input type="hidden" name="b36" value="<?php echo $bk3; ?>">
                                         </tr>
                                         <tr>
                                         <th scope="row"><?php echo $a4; ?></th>
@@ -144,6 +188,12 @@ jQuery( "form" ).trigger( e );
                                             <td><?php echo $bk44; ?></td>
                                             <td><?php echo $bk54; ?></td>
                                             <td><?php echo $bk4; ?></td>
+                                        <input type="hidden" name="b41" value="<?php echo $bk14; ?>">
+                                        <input type="hidden" name="b42" value="<?php echo $bk24; ?>">
+                                        <input type="hidden" name="b43" value="<?php echo $bk34; ?>">
+                                        <input type="hidden" name="b44" value="<?php echo $bk44; ?>">
+                                        <input type="hidden" name="b45" value="<?php echo $bk54; ?>">
+                                        <input type="hidden" name="b46" value="<?php echo $bk4; ?>">
                                         </tr>
                                         <tr>
                                         <th scope="row"><?php echo $a5; ?></th>
@@ -153,6 +203,12 @@ jQuery( "form" ).trigger( e );
                                             <td><?php echo $bk45; ?></td>
                                             <td><?php echo $bk55; ?></td>
                                             <td><?php echo $bk5; ?></td>
+                                        <input type="hidden" name="b51" value="<?php echo $bk15; ?>">
+                                        <input type="hidden" name="b52" value="<?php echo $bk25; ?>">
+                                        <input type="hidden" name="b53" value="<?php echo $bk35; ?>">
+                                        <input type="hidden" name="b54" value="<?php echo $bk45; ?>">
+                                        <input type="hidden" name="b55" value="<?php echo $bk55; ?>">
+                                        <input type="hidden" name="b56" value="<?php echo $bk5; ?>">
                                         </tr>
                                         <tr>
                                         
@@ -211,8 +267,8 @@ jQuery( "form" ).trigger( e );
                                 </table>
                                 </form>
                                 <div class="card-footer">
-                                <button id="btnSave" type="button" class="btn btn-primary "></button>
-                                    <button id="btnPrint" type="button" class="btn btn-primary float-right" onClick="init()">Print/Cetak &nbsp;<span class="fa fa-print"></span></button>
+                                    <button id="btnSave" type="button" class="btn btn-primary " onclick="save2();">Simpan Ke History</button>
+                                    <button id="btnPrint" type="button" class="btn btn-primary float-right" onclick="init()">Print/Cetak &nbsp;<span class="fa fa-print"></span></button>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 <script type="text/javascript"> 
     
-    var save_method; //for save method string
+    var save_method = 'add'; //for save method string
     var table;
     
     $(document).ready(function() {
@@ -16,7 +16,7 @@
             todayBtn: true 
         });
 
-        add();
+        save2();
 
     });
     
@@ -46,6 +46,38 @@
             {
                 $('#modal_form').modal('hide');
                 lanjut()
+                $('#btnSave').text('Mengalihkan Halaman'); //change button text
+                $('#btnSave').attr('disabled',false); //set button enable 
+            },
+            error: function (jqXHR, textStatus, errorThrown){
+                alert("Error json " + errorThrown);
+                
+                $('#btnSave').text('Save'); //change button text
+                $('#btnSave').attr('disabled',false); //set button enable 
+            }
+        });
+    }
+
+    function save2(){
+        $('#btnSave').text('Saving...'); //change button text
+        $('#btnSave').attr('disabled',true); //set button disable 
+        
+        var url;
+        if(save_method === 'add') {
+            url = "<?php echo base_url(); ?>nalternatif/ajax_add_bobot";
+        } else {
+            url = "<?php echo base_url(); ?>nalternatif/ajax_edit";
+        }
+        
+        // ajax adding data to database
+        $.ajax({
+            url : url,
+            type: "POST",
+            data: $('#form').serialize(),
+            dataType: "JSON",
+            success: function(data)
+            {
+                $('#modal_form').modal('hide');
                 $('#btnSave').text('Mengalihkan Halaman'); //change button text
                 $('#btnSave').attr('disabled',false); //set button enable 
             },

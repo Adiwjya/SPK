@@ -84,11 +84,6 @@
                                 <ul class="mega-dropdown-menu dropdown-menu row">
                                    
                                     <li class="col-md-2 pb-2 pt-2">
-                                        <a href="<?php echo base_url(); ?>barang">
-                                        <h6 class="dropdown-menu-header text-uppercase mb-1"> Data Barang</h6>
-                                        </a>
-                                    </li>
-                                    <li class="col-md-2 pb-2 pt-2">
                                         <a href="<?php echo base_url(); ?>kriteria">
                                         <h6 class="dropdown-menu-header text-uppercase mb-1"> Data Kriteria</h6>
                                         </a>

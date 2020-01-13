@@ -24,6 +24,14 @@ class Login extends CI_Controller{
             );
             $this->session->set_userdata('logged_in', $sess_array);
             $status = "ok";
+        }else if($email == "user" && $pass == "user"){
+            $sess_array = array(
+                'email' => "user@gmail.com",
+                'akses' => "User",
+                'nama' => "User"
+            );
+            $this->session->set_userdata('logged_in', $sess_array);
+            $status = "ok";
         }else{
             $status = "Maaf, anda tidak berhak mengakses";
         }

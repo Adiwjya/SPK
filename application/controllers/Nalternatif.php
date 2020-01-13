@@ -26,9 +26,15 @@ class Nalternatif extends CI_Controller{
                     $i++;
                 }
                 
-                $this->load->view('head', $data);
-                $this->load->view('nalternatif/index');
-                $this->load->view('footer');
+                if ($data['akses'] == "User") {
+                    $this->load->view('head2',$data);
+                    $this->load->view('nalternatif/index');
+                    $this->load->view('footer');
+                }else{
+                    $this->load->view('head',$data);
+                    $this->load->view('nalternatif/index');
+                    $this->load->view('footer');
+                }
             }else {
                 $message = "Data Alternatif harus minimal 5";
                 echo "<script type='text/javascript'>alert('$message');</script>";
@@ -96,10 +102,19 @@ class Nalternatif extends CI_Controller{
                 $data['n'.$z] = $row->nilai;
                 $z++;
             }
+
+            if ($data['akses'] == "User") {
+                $this->load->view('head2',$data);
+                $this->load->view('nalternatif/detail');
+                $this->load->view('footer');
+            }else{
+                $this->load->view('head',$data);
+                $this->load->view('nalternatif/detail');
+                $this->load->view('footer');
+            }
             
             $this->load->view('head', $data);
-            $this->load->view('nalternatif/detail');
-            $this->load->view('footer');
+            
         }else {
             $message = "Data Kriteria harus minimal 5";
             echo "<script type='text/javascript'>alert('$message');</script>";

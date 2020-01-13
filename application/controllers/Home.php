@@ -14,10 +14,16 @@ class Home extends CI_Controller{
             $data['email'] = $session_data['email'];
             $data['akses'] = $session_data['akses'];
             $data['nama'] = $session_data['nama'];
-            
-            $this->load->view('head',$data);
-            $this->load->view('content');
-            $this->load->view('footer');
+
+            if ($data['akses'] == "User") {
+                $this->load->view('head2',$data);
+                $this->load->view('content');
+                $this->load->view('footer');
+            }else{
+                $this->load->view('head',$data);
+                $this->load->view('content');
+                $this->load->view('footer');
+            }
         }else{
            $this->modul->halaman('login');
         }

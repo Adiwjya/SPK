@@ -2,7 +2,7 @@
 class Modul {
     
     public function getkoneksi() {
-        return mysqli_connect("localhost", "root", "", "inventory");
+        return mysqli_connect("localhost", "root", "", "spk");
     }
     
     public function pesan_halaman($pesan, $halaman){

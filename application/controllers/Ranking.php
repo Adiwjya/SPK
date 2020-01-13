@@ -74,13 +74,18 @@ class Ranking extends CI_Controller{
                 $data['bk5'.$z] = $row->bobot;
                 $z++;
             }
-            
 
-
-            
-            $this->load->view('head', $data);
-            $this->load->view('ranking/index');
+            if ($data['akses'] == "User") {
+                $this->load->view('head2',$data);
+                $this->load->view('ranking/index');
             $this->load->view('footer');
+            }else{
+                $this->load->view('head',$data);
+                $this->load->view('ranking/index');
+            $this->load->view('footer');
+            }
+            
+            
         }else {
             $message = "Data Kriteria harus minimal 5";
             echo "<script type='text/javascript'>alert('$message');</script>";
@@ -181,6 +186,78 @@ class Ranking extends CI_Controller{
                 }else{
                     $status = "Data gagal tersimpan";
                 }
+            echo json_encode(array("status" => $status));
+        }else{
+            $this->modul->halaman('login');
+        }
+    }
+
+    public function ajax_add_history() {
+        if($this->session->userdata('logged_in')){
+            
+            $jumlah = $this->modul->autokode1('HTR','id','history_ranking','4','7');
+            $data = array(
+                'id' => $this->modul->autokode1('HTR','id','history_ranking','4','7'),
+                'tanggal' => $this->modul->TanggalWaktu(),
+                'nama_1' => $this->input->post('ns1'),
+                'nama_2' => $this->input->post('ns2'),
+                'nama_3' => $this->input->post('ns3'),
+                'nama_4' => $this->input->post('ns4'),
+                'nama_5' => $this->input->post('ns5'),
+                'nilai_1' => $this->input->post('nb1'),
+                'nilai_2' => $this->input->post('nb2'),
+                'nilai_3' => $this->input->post('nb3'),
+                'nilai_4' => $this->input->post('nb4'),
+                'nilai_5' => $this->input->post('nb5')
+            );
+
+             $simpan = $this->Mglobals->add("history_ranking",$data);
+            if($simpan == 1){
+                    $data2 = array(
+                        'id' => $this->modul->autokode1('HTD','id','history','4','7'),
+                        'b11' => $this->input->post('b11'),
+                        'b12' => $this->input->post('b12'),
+                        'b13' => $this->input->post('b13'),
+                        'b14' => $this->input->post('b14'),
+                        'b15' => $this->input->post('b15'),
+                        'b16' => $this->input->post('b16'),
+                        'b21' => $this->input->post('b21'),
+                        'b22' => $this->input->post('b22'),
+                        'b23' => $this->input->post('b23'),
+                        'b24' => $this->input->post('b24'),
+                        'b25' => $this->input->post('b25'),
+                        'b26' => $this->input->post('b26'),
+                        'b31' => $this->input->post('b31'),
+                        'b32' => $this->input->post('b32'),
+                        'b33' => $this->input->post('b33'),
+                        'b34' => $this->input->post('b34'),
+                        'b35' => $this->input->post('b35'),
+                        'b36' => $this->input->post('b36'),
+                        'b41' => $this->input->post('b41'),
+                        'b42' => $this->input->post('b42'),
+                        'b43' => $this->input->post('b43'),
+                        'b44' => $this->input->post('b44'),
+                        'b45' => $this->input->post('b45'),
+                        'b46' => $this->input->post('b46'),
+                        'b51' => $this->input->post('b51'),
+                        'b52' => $this->input->post('b52'),
+                        'b53' => $this->input->post('b53'),
+                        'b54' => $this->input->post('b54'),
+                        'b55' => $this->input->post('b55'),
+                        'b56' => $this->input->post('b56'),
+                        'id_ranking_h' => $jumlah
+                    );
+
+                    $update = $this->Mglobals->add("history",$data2);
+                if($update == 1){
+                    $status = "Data tersimpan";
+                }else{
+                    $status = "Data gagal tersimpan";
+                }
+            }else{
+                $status = "Data gagal tersimpan";
+            }
+                   
             echo json_encode(array("status" => $status));
         }else{
             $this->modul->halaman('login');

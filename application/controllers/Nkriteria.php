@@ -26,9 +26,17 @@ class Nkriteria extends CI_Controller{
                 $i++;
             }
             
-            $this->load->view('head', $data);
-            $this->load->view('nkriteria/index');
+            if ($data['akses'] == "User") {
+                $this->load->view('head2',$data);
+                $this->load->view('nkriteria/index');
             $this->load->view('footer');
+            }else{
+                $this->load->view('head',$data);
+                $this->load->view('nkriteria/index');
+            $this->load->view('footer');
+            }
+
+
         }else {
             $message = "Data Kriteria harus minimal 5";
             echo "<script type='text/javascript'>alert('$message');</script>";
@@ -62,10 +70,18 @@ class Nkriteria extends CI_Controller{
                 $data['n'.$z] = $row->nilai;
                 $z++;
             }
-            
-            $this->load->view('head', $data);
-            $this->load->view('nkriteria/detail');
+
+            if ($data['akses'] == "User") {
+                $this->load->view('head2',$data);
+                $this->load->view('nkriteria/detail');
             $this->load->view('footer');
+            }else{
+                $this->load->view('head',$data);
+                $this->load->view('nkriteria/detail');
+            $this->load->view('footer');
+            }
+            
+
         }else {
             $message = "Data Kriteria harus minimal 5";
             echo "<script type='text/javascript'>alert('$message');</script>";

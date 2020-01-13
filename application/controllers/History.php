@@ -1,5 +1,5 @@
 <?php
-class Kriteria extends CI_Controller{
+class History extends CI_Controller{
     
     public function __construct() {
         parent::__construct();
@@ -13,14 +13,94 @@ class Kriteria extends CI_Controller{
             $data['email'] = $session_data['email'];
             $data['akses'] = $session_data['akses'];
             $data['nama'] = $session_data['nama'];
+            $data['history_ranking'] = $this->Mglobals->getAllQ('select * from history_ranking order by tanggal desc');
+            $data['history'] = $this->Mglobals->getAll('history');
+            
+            $this->load->view('head', $data);
+            $this->load->view('history/index');
+            $this->load->view('footer');
+        }else{
+           $this->modul->halaman('login');
+        }
+    }
 
+    public function details() {
+        if($this->session->userdata('logged_in')){
+            $session_data = $this->session->userdata('logged_in');
+            $data['email'] = $session_data['email'];
+            $data['akses'] = $session_data['akses'];
+            $data['nama'] = $session_data['nama'];
+            $idnya = $this->uri->segment(3);
+            
+            $datanya = $this->Mglobals->getAllQR('select * from history where id_ranking_h = "'.$idnya.'";');
+            $data['b11'] = $datanya->b11;
+            $data['b12'] = $datanya->b12;
+            $data['b13'] = $datanya->b13;
+            $data['b14'] = $datanya->b14;
+            $data['b15'] = $datanya->b15;
+            $data['b16'] = $datanya->b16;
+            $data['b21'] = $datanya->b21;
+            $data['b22'] = $datanya->b22;
+            $data['b23'] = $datanya->b23;
+            $data['b24'] = $datanya->b24;
+            $data['b25'] = $datanya->b25;
+            $data['b26'] = $datanya->b26;
+            $data['b31'] = $datanya->b31;
+            $data['b32'] = $datanya->b32;
+            $data['b33'] = $datanya->b33;
+            $data['b34'] = $datanya->b34;
+            $data['b35'] = $datanya->b35;
+            $data['b36'] = $datanya->b36;
+            $data['b41'] = $datanya->b41;
+            $data['b42'] = $datanya->b42;
+            $data['b43'] = $datanya->b43;
+            $data['b44'] = $datanya->b44;
+            $data['b45'] = $datanya->b45;
+            $data['b46'] = $datanya->b46;
+            $data['b51'] = $datanya->b51;
+            $data['b52'] = $datanya->b52;
+            $data['b53'] = $datanya->b53;
+            $data['b54'] = $datanya->b54;
+            $data['b55'] = $datanya->b55;
+            $data['b56'] = $datanya->b56;
+
+            $datab = $this->Mglobals->getAllQR('select * from history_ranking where id = "'.$idnya.'";');
+            $data['id'] = $datab->id;
+            $data['tanggal'] = $datab->tanggal;
+            $data['nama_1'] = $datab->nama_1;
+            $data['nama_2'] = $datab->nama_2;
+            $data['nama_3'] = $datab->nama_3;
+            $data['nama_4'] = $datab->nama_4;
+            $data['nama_5'] = $datab->nama_5;
+            $data['nilai_1'] = $datab->nilai_1;
+            $data['nilai_2'] = $datab->nilai_2;
+            $data['nilai_3'] = $datab->nilai_3;
+            $data['nilai_4'] = $datab->nilai_4;
+            $data['nilai_5'] = $datab->nilai_5;
+
+            // var_dump($datanya);
+
+            $dataa = $this->Mglobals->getAll("alternatif");
+            $i = 1;
+            foreach ($dataa->result() as $row) {
+                $data['a'.$i] = $row->nama;
+                $i++;
+            }
+
+            $datak = $this->Mglobals->getAll("kriteria");
+            $i = 1;
+            foreach ($datak->result() as $row) {
+                $data['k'.$i] = $row->nama;
+                $i++;
+            }
+            
             if ($data['akses'] == "User") {
                 $this->load->view('head2',$data);
-                $this->load->view('kriteria/index');
+                $this->load->view('history/detail');
             $this->load->view('footer');
             }else{
                 $this->load->view('head',$data);
-                $this->load->view('kriteria/index');
+                $this->load->view('history/detail');
             $this->load->view('footer');
             }
             
