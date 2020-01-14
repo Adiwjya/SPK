@@ -183,7 +183,7 @@ class History extends CI_Controller{
     public function hapus() {
         if($this->session->userdata('logged_in')){
             $kondisi['id'] = $this->uri->segment(3);
-            $hapus = $this->Mglobals->delete("kriteria",$kondisi);
+            $hapus = $this->Mglobals->delete("history_ranking",$kondisi);
             if($hapus == 1){
                 $status = "Data terhapus";
             }else{

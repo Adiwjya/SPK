@@ -61,16 +61,16 @@
         });
     }
     
-    function hapus(id, nama){
-        if(confirm("Apakah anda yakin menghapus " + nama + " ?")){
+    function hapus(id){
+        if(confirm("Apakah anda yakin menghapus history " + id + " ?")){
             // ajax delete data to database
             $.ajax({
-                url : "<?php echo base_url(); ?>kriteria/hapus/" + id,
+                url : "<?php echo base_url(); ?>history/hapus/" + id,
                 type: "POST",
                 dataType: "JSON",
                 success: function(data){
                     alert(data.status);
-                    reload();
+                    ulangi();
                 },error: function (jqXHR, textStatus, errorThrown){
                     alert('Error hapus data');
                 }
@@ -97,6 +97,10 @@
                 alert('Error get data');
             }
         });
+    }
+
+    function ulangi(){
+        window.location.href = "<?php echo base_url(); ?>history/";
     }
 
     function pindah(tujuan){
@@ -131,7 +135,7 @@
                         <div class="card-content">
                             <div class="card-body">
                             <button id="btnPrint" type="button" class="btn btn-primary " onclick="pindah('<?php echo $row->id ; ?>')">Detail &nbsp;<span class="fa fa-info"></span></button>
-                            <button id="btnPrint" type="button" class="btn btn-danger " onclick="init()">Hapus &nbsp;<span class="fa fa-trash"></span></button>
+                            <button id="btnPrint" type="button" class="btn btn-danger " onclick="hapus('<?php echo $row->id ; ?>')">Hapus &nbsp;<span class="fa fa-trash"></span></button>
                             </div>
                         </div>
                     </div>
